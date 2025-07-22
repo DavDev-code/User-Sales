@@ -1,0 +1,86 @@
+import java.util.Scanner;
+import java.util.UUID;
+class Main {
+    public static void main(String[] args) {
+        Scanner in=new Scanner(System.in);
+        Scanner input=new Scanner(System.in);
+        String[] usernames=new String[5];
+        String[] properties={"Peireas", "Chania", "N. Faliro", "Nikaia", "Korydallos"};
+        double[] full_price=new double[5];
+        String users;
+        double price;
+        int number=1, number_b=1;
+        for(int i=0;i<5;i++){
+            System.out.print("Enter the full name of user "+number+": ");
+            users=in.nextLine();
+            number++;
+            String username=gen_username(users);
+            usernames[i]=username;
+        }
+        for(int j=0;j<5;j++){
+            System.out.print("Enter the price for the property "+properties[j]+"(Before VAT): ");
+            price=input.nextDouble();
+            while(price<=0){
+                System.out.print("Enter the price for the property "+properties[j]+"(Before VAT): ");
+                price=input.nextDouble();
+            }
+            float vat=24;
+            double vat_add = (vat / 100) * price;
+            double final_price = price + vat_add;
+            full_price[j]=final_price;
+        }
+        System.out.println("\nProperties for SALE info");
+        for(int k=0;k<5;k++){
+            System.out.println("Owner: "+usernames[k]+" | Propery Location: "+properties[k]+" | Price: "+Math.round(full_price[k]));
+        }
+        int owner=0, owner_b=0;
+        do{
+            System.out.println("\nWhich owner are you?(Type the corresponding number)");
+            System.out.print("1. "+usernames[0]+"\n2. "+usernames[1]+"\n3. "+usernames[2]+"\n4. "+usernames[3]+"\n5. "+usernames[4]+"\n");
+            owner=input.nextInt();
+        }while(owner<1 || owner>5);
+        switch(owner){
+            case 1:
+                telikos_pinakas(input, owner, owner_b, number_b, usernames, properties, full_price);
+                break;
+            case 2:
+                telikos_pinakas(input, owner, owner_b, number_b, usernames, properties, full_price);
+                break;
+            case 3:
+                telikos_pinakas(input, owner, owner_b, number_b, usernames, properties, full_price);
+                break;
+            case 4:
+                telikos_pinakas(input, owner, owner_b, number_b, usernames, properties, full_price);
+                break;
+            case 5:
+                telikos_pinakas(input, owner, owner_b, number_b, usernames, properties, full_price);
+                break;    
+        }
+        in.close();
+        input.close();
+    }
+    public static String gen_username(String users){
+        String[] parts=users.trim().split(" ");
+        if(parts.length==1){
+            return parts[0].toLowerCase();
+        }
+        return(parts[0].charAt(0)+parts[1]).toLowerCase();
+    }
+    public static void telikos_pinakas(Scanner input, int owner, int owner_b, int number_b, String[] usernames, String[] properties, double[] full_price){
+        UUID u_code = UUID.randomUUID(); 
+        number_b=1;
+        System.out.println();
+        for(int m=0;m<5;m++){
+            if(owner-1==m){
+                continue;
+            }
+            System.out.println(number_b+" Owner: "+usernames[m]+" | Propery Location: "+properties[m]+" | Price: "+Math.round(full_price[m]));
+            number_b++;
+        }
+        do{
+            System.out.println("\nWhich property do you want to buy?(Type the corresponding number)");
+            owner_b=input.nextInt();
+        }while(owner_b<1 || owner_b>4);
+        System.out.println("Your transaction code is "+u_code+". Thank you for using our services.");
+    }
+}
